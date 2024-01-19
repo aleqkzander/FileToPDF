@@ -31,6 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.CounterLabel = new System.Windows.Forms.Label();
             this.LoadingImage = new System.Windows.Forms.PictureBox();
+            this.Btn_OpenExports = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -38,7 +39,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Calibri", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(17, 111);
+            this.label1.Location = new System.Drawing.Point(17, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(250, 26);
             this.label1.TabIndex = 0;
@@ -47,7 +48,7 @@
             // CounterLabel
             // 
             this.CounterLabel.AutoSize = true;
-            this.CounterLabel.Location = new System.Drawing.Point(105, 137);
+            this.CounterLabel.Location = new System.Drawing.Point(105, 35);
             this.CounterLabel.Name = "CounterLabel";
             this.CounterLabel.Size = new System.Drawing.Size(74, 13);
             this.CounterLabel.TabIndex = 1;
@@ -56,7 +57,7 @@
             // LoadingImage
             // 
             this.LoadingImage.Image = global::FileToPDF.Properties.Resources.loading;
-            this.LoadingImage.Location = new System.Drawing.Point(117, 199);
+            this.LoadingImage.Location = new System.Drawing.Point(117, 105);
             this.LoadingImage.Name = "LoadingImage";
             this.LoadingImage.Size = new System.Drawing.Size(50, 50);
             this.LoadingImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -64,11 +65,22 @@
             this.LoadingImage.TabStop = false;
             this.LoadingImage.Visible = false;
             // 
+            // Btn_OpenExports
+            // 
+            this.Btn_OpenExports.Location = new System.Drawing.Point(87, 226);
+            this.Btn_OpenExports.Name = "Btn_OpenExports";
+            this.Btn_OpenExports.Size = new System.Drawing.Size(110, 23);
+            this.Btn_OpenExports.TabIndex = 3;
+            this.Btn_OpenExports.Text = "Open exports";
+            this.Btn_OpenExports.UseVisualStyleBackColor = true;
+            this.Btn_OpenExports.Click += new System.EventHandler(this.Btn_OpenExports_Click);
+            // 
             // Welcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.Btn_OpenExports);
             this.Controls.Add(this.LoadingImage);
             this.Controls.Add(this.CounterLabel);
             this.Controls.Add(this.label1);
@@ -90,6 +102,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label CounterLabel;
         private System.Windows.Forms.PictureBox LoadingImage;
+        private System.Windows.Forms.Button Btn_OpenExports;
     }
 }
 

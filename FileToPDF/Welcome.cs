@@ -2,6 +2,7 @@
 using iText.Layout;
 using iText.Layout.Element;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -43,6 +44,7 @@ namespace FileToPDF
                 Properties.Settings.Default.Counter = _counter;
                 Properties.Settings.Default.Save();
                 DisplayCounter(_counter);
+                OpenExportsFolder();
             }
 
             LoadingImage.Visible = false;
@@ -63,7 +65,7 @@ namespace FileToPDF
         private string SetupDestinationPath()
         {
             string rootFolder = Path.GetDirectoryName(Application.ExecutablePath);
-            string newFolderName = "Exports";
+            string newFolderName = "exports";
             string newFolderPath = Path.Combine(rootFolder, newFolderName);
 
             if (!Directory.Exists(newFolderPath))
@@ -131,6 +133,27 @@ namespace FileToPDF
         private void DisplayCounter(int counter)
         {
             CounterLabel.Text = $"Counter: {counter:0000}";
+        }
+
+        private void Btn_OpenExports_Click(object sender, EventArgs e)
+        {
+            OpenExportsFolder();
+        }
+
+        private void OpenExportsFolder()
+        {
+            string executablePath = System.Reflection.Assembly.GetEntryAssembly().Location;
+            string folderPath = Path.GetDirectoryName(executablePath);
+            string exportsFolderPath = Path.Combine(folderPath, "exports");
+
+            if (Directory.Exists(exportsFolderPath))
+            {
+                Process.Start("explorer.exe", exportsFolderPath);
+            }
+            else
+            {
+                MessageBox.Show($"No folder is currently available. To address this, convert a file to initiate automatic creation of the required folder.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }
