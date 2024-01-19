@@ -30,6 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.CounterLabel = new System.Windows.Forms.Label();
+            this.LoadingImage = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.LoadingImage)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -51,19 +53,33 @@
             this.CounterLabel.TabIndex = 1;
             this.CounterLabel.Text = "Counter: 0000";
             // 
+            // LoadingImage
+            // 
+            this.LoadingImage.Image = global::FileToPDF.Properties.Resources.loading;
+            this.LoadingImage.Location = new System.Drawing.Point(117, 199);
+            this.LoadingImage.Name = "LoadingImage";
+            this.LoadingImage.Size = new System.Drawing.Size(50, 50);
+            this.LoadingImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LoadingImage.TabIndex = 2;
+            this.LoadingImage.TabStop = false;
+            this.LoadingImage.Visible = false;
+            // 
             // Welcome
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.LoadingImage);
             this.Controls.Add(this.CounterLabel);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MaximizeBox = false;
             this.Name = "Welcome";
             this.Text = "File to PDF";
             this.Load += new System.EventHandler(this.Welcome_Load);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Welcome_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Welcome_DragEnter);
+            ((System.ComponentModel.ISupportInitialize)(this.LoadingImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -73,6 +89,7 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label CounterLabel;
+        private System.Windows.Forms.PictureBox LoadingImage;
     }
 }
 

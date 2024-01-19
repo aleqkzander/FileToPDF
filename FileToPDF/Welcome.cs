@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using System;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace FileToPDF
 {
@@ -36,6 +32,7 @@ namespace FileToPDF
 
         private void Welcome_DragDrop(object sender, DragEventArgs e)
         {
+            LoadingImage.Visible = true;
             string filePath = SetupFilePathFromDragAndDrop(e);
             if (!PathIsCorrect(filePath)) return;
 
@@ -48,6 +45,7 @@ namespace FileToPDF
                 Properties.Settings.Default.Counter = _counter;
                 Properties.Settings.Default.Save();
                 DisplayCounter(_counter);
+                LoadingImage.Visible = false;
             }
         }
 
@@ -93,41 +91,31 @@ namespace FileToPDF
 
         private bool FileWasConverted(string destinationpath, string filepath)
         {
-            //try
-            //{
-            //    string exportFilename = $"{_counter:0000}ConvertedFile.pdf";
-            //    string exportPath = Path.Combine(destinationpath, exportFilename);
+            try
+            {
+                string exportFilename = $"{_counter:0000}ConvertedFile.pdf";
+                string exportPath = Path.Combine(destinationpath, exportFilename);
 
-            //    using (var writer = new PdfWriter(exportPath))
-            //    {
-            //        using (var pdf = new PdfDocument(writer))
-            //        {
-            //            using (var document = new Document(pdf))
-            //            {
-            //                string content = ReadFileContent(filepath);
+                using (var writer = new PdfWriter(exportPath))
+                {
+                    using (var pdf = new PdfDocument(writer))
+                    {
+                        using (var document = new Document(pdf))
+                        {
+                            string content = ReadFileContent(filepath);
+                            document.Add(new Paragraph(content));
+                            return true;
+                        }
+                    }
+                }
+            }
 
-            //                if (_isCode)
-            //                {
-            //                    var codeElement = new Code(content).SetLanguage("cs");
-            //                    return true;
-            //                }
-            //                else
-            //                {
-            //                    document.Add(new Paragraph(content));
-            //                    return true;
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-            //catch (Exception exception)
-            //{
-            //    MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    Clipboard.SetText(exception.ToString());
-            //    return false;
-            //}
-
-            return true;
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Clipboard.SetText(exception.ToString());
+                return false;
+            }
         }
 
 
