@@ -3,7 +3,6 @@ using iText.Layout;
 using iText.Layout.Element;
 using System;
 using System.IO;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace FileToPDF
@@ -11,7 +10,7 @@ namespace FileToPDF
     public partial class Welcome : Form
     {
         private int _counter;
-        private bool _isCode = true;
+        private readonly string whitespace = "\u00a0";
 
         public Welcome()
         {
@@ -33,9 +32,8 @@ namespace FileToPDF
         private void Welcome_DragDrop(object sender, DragEventArgs e)
         {
             LoadingImage.Visible = true;
-            string filePath = SetupFilePathFromDragAndDrop(e);
-            if (!PathIsCorrect(filePath)) return;
 
+            string filePath = SetupFilePathFromDragAndDrop(e);
             string destinationPath = SetupDestinationPath();
             if (string.IsNullOrEmpty(destinationPath)) return;
 
@@ -45,8 +43,9 @@ namespace FileToPDF
                 Properties.Settings.Default.Counter = _counter;
                 Properties.Settings.Default.Save();
                 DisplayCounter(_counter);
-                LoadingImage.Visible = false;
             }
+
+            LoadingImage.Visible = false;
         }
 
         private string SetupFilePathFromDragAndDrop(DragEventArgs e)
@@ -58,20 +57,6 @@ namespace FileToPDF
             else
             {
                 return null;
-            }
-        }
-
-        private bool PathIsCorrect(string path)
-        {
-            DialogResult result = MessageBox.Show($"Is this your correct file?\n\n{path}", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            if (result == DialogResult.Yes)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
             }
         }
 
@@ -93,7 +78,7 @@ namespace FileToPDF
         {
             try
             {
-                string exportFilename = $"{_counter:0000}ConvertedFile.pdf";
+                string exportFilename = $"{_counter:0000}_ConvertedFile.pdf";
                 string exportPath = Path.Combine(destinationpath, exportFilename);
 
                 using (var writer = new PdfWriter(exportPath))
@@ -103,7 +88,12 @@ namespace FileToPDF
                         using (var document = new Document(pdf))
                         {
                             string content = ReadFileContent(filepath);
-                            document.Add(new Paragraph(content));
+
+                            Paragraph paragraph = new Paragraph();
+                            paragraph.SetFontSize(6f);
+                            paragraph.Add(content);
+
+                            document.Add(paragraph);
                             return true;
                         }
                     }
@@ -126,6 +116,8 @@ namespace FileToPDF
                 using (StreamReader reader = new StreamReader(filePath))
                 {
                     string fileContent = reader.ReadToEnd();
+                    fileContent = fileContent.Replace(" ", whitespace);
+
                     return fileContent;
                 }
             }
